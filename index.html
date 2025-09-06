@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Hub - Your Gateway to Excellence</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">🎓</div>
+                <span class="logo-text">Study Hub</span>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-icon">
+                    <div class="icon-circle">
+                        <span class="icon">🎓</span>
+                    </div>
+                </div>
+                
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Welcome to<br>
+                        <span class="highlight">Study Hub</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Your gateway to excellence. Master new skills with our comprehensive video courses and study materials.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="exploreCourses">
+                            📚 Explore Courses
+                        </button>
+                        <button class="btn btn-secondary" id="joinCommunity">
+                            📨 Join Community
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust Section -->
+            <section class="trust">
+                <h2 class="trust-title">Trusted by Thousands</h2>
+            </section>
+
+            <!-- Courses Section -->
+            <section class="courses-section" id="coursesSection" style="display: none;">
+                <div class="courses-header">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="🔍 Search courses..." id="searchCourses">
+                    </div>
+                    <h2 class="courses-title">Available Courses</h2>
+                </div>
+
+                <div class="courses-list" id="coursesList">
+                    <!-- Courses will be populated by JavaScript -->
+                </div>
+
+                <button class="load-more-btn" id="loadMoreBtn">Load More Courses</button>
+            </section>
+
+            <!-- Course Detail Section -->
+            <section class="course-detail-section" id="courseDetailSection" style="display: none;">
+                <div class="course-detail-header">
+                    <h2 class="course-detail-title" id="courseDetailTitle">Course Title</h2>
+                    <div class="course-detail-tabs">
+                        <button class="tab-btn active" id="videosTab">📹 Videos (<span id="videosCount">0</span>)</button>
+                        <button class="tab-btn" id="pdfsTab">📄 PDFs (<span id="pdfsCount">0</span>)</button>
+                    </div>
+                </div>
+
+                <div class="course-detail-content">
+                    <!-- Videos List -->
+                    <div class="content-list active" id="videosList">
+                        <h3 class="content-section-title">All Videos</h3>
+                        <div class="content-items" id="videosItems">
+                            <!-- Video items will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- PDFs List -->
+                    <div class="content-list" id="pdfsList">
+                        <h3 class="content-section-title">All PDFs</h3>
+                        <div class="content-items" id="pdfsItems">
+                            <!-- PDF items will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
