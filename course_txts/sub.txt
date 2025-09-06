@@ -1,1 +1,22 @@
-courses 
+# Sub Inspector Course Content
+
+# Videos
+(हिन्दी व्याकरण - सुनील खोखरिया सर) संकर व देशज शब्द: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2368595/plain/720x1280.mp4
+(हिन्दी व्याकरण - सुनील खोखरिया सर) संकर व देशज शब्द: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/786622099838018700_video_2368595.pdf
+(हिन्दी व्याकरण - सुनील खोखरिया सर) विदेशी शब्द: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2368347/plain/720x1280.mp4
+(हिन्दी व्याकरण - सुनील खोखरिया सर) विदेशी शब्द: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/671024162360346100_video_2368347.pdf
+(Course Information and Syllabus) Live Interaction With Akshay Sir and Team || 11 February: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2451536/plain/720x1280.mp4
+(Course Information and Syllabus) Live Interaction With Akshay Sir and Team || 11 February: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/729708245668926800_video_2451536.pdf
+(Course Information and Syllabus) राजस्थान पुलिस उपनिरीक्षक || लिखित परीक्षा योजना एवं पाठ्यक्रम: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/310993616093205900_PDF.pdf
+(Current Affairs) Part-1 || Current Affair(Narendra Choudhary) || 01-January: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/1959748/plain/720x1280.mp4
+(Current Affairs) Part-1 || Current Affair(Narendra Choudhary) || 01-January: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/598283578517977100_PDF.pdf
+(Current Affairs) Part-1 || Current Affair(Narendra Choudhary) || | 17-February: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2022133/plain/720x1280.mp4
+(Current Affairs) Part-1 || Current Affair(Narendra Choudhary) || | 17-February: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/53719907253088264_PDF.pdf
+(Current Affairs) 17 फरवरी, 2024 राजस्थान समसामयिकी: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/626566432881198100_PDF.pdf
+(Law(विधि) - Ashok Sir) Part-1 || पाठ्यक्रम परिचर्चा || 14-September: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2274994/plain/720x1280.mp4
+(Law(विधि) - Ashok Sir) Part-1 || पाठ्यक्रम परिचर्चा || 14-September: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/778478000011887700_PDF.pdf
+(Law(विधि) - Ashok Sir) Part-1 || महिला एवं बाल अपराध || 16-September: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/706407228873178000_PDF.pdf
+(Law(विधि) - Ashok Sir) Part-1 || महिला एवं बाल अपराध || 16-September: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2276487/plain/720x1280.mp4
+(Law(विधि) - Ashok Sir) Part-2 || महिला एवं बाल अपराध || 18-September: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2278759/plain/720x1280.mp4
+(Law(विधि) - Ashok Sir) Part-3 || महिला एवं बाल अपराध || 19-September: https://d1q5ugnejk3zoi.cloudfront.net/ut-production-jw/admin_v1/file_library/videos/enc_plain_mp4/2280232/plain/720x1280.mp4
+(Law(विधि) - Ashok Sir) Part-2 || महिला एवं बाल अपराध || 18-September: https://apps-s3-prod.utkarshapp.com/admin_v1/file_manager/pdf/727801681397195600_PDF.pdf
