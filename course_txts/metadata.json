@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "title": "Sub Inspector",
+        "description": "Recorded Batch From Jodhpur",
+        "thumbnail": "https://files.catbox.moe/0wy3xp.jpg",
+        "txtFile": "sub.txt",
+        "videos": 1766,
+        "pdfs": 1626,
+        "startDate": "06 Aug 2023",
+        "endDate": "04 Mar 2024"
+    },
+    {
+        "id": 2,
+        "title": "SSC CGL 2025",
+        "description": "Complete Course with Mock Tests",
+        "thumbnail": "SSC CGL",
+        "txtFile": "ssc.txt",
+        "videos": 245,
+        "pdfs": 89,
+        "startDate": "01 Mar 2025",
+        "endDate": "30 Sep 2025"
+    }
+]
