@@ -255,25 +255,103 @@ function setupCourseTabs() {
 function openContent(url){window.open(url,'_blank');}
 
 // 🔹 Player Functions
-function ensureHlsDetached(){if(hlsInstance){hlsInstance.destroy();hlsInstance=null;}}
-function playInPlayer(url,title,index=0){
-    const wrap=document.getElementById('videoPlayer'),titleEl=document.getElementById('playerTitle'),videoEl=document.getElementById('mainPlayer'),idx=document.getElementById('indexBadge');
-    wrap.style.display='block'; titleEl.textContent=title||'Playing';
-    currentVideoIndex=index; const total=(currentCourseDetails?.videos||[]).length; idx.textContent=`${index+1} / ${total}`;
-    document.querySelectorAll('#videosItems .content-item').forEach(el=>{el.classList.remove('playing');const s=el.querySelector('.content-status');if(s) s.textContent='';});
-    const cur=document.querySelectorAll('#videosItems .content-item')[index]; if(cur){cur.classList.add('playing');const s=cur.querySelector('.content-status');if(s) s.textContent='Playing';}
-    ensureHlsDetached(); videoEl.pause(); videoEl.removeAttribute('src');
-    const lower=url.toLowerCase();
-    if(lower.endsWith('.m3u8')||lower.includes('m3u8')) {
-        if(window.Hls&&Hls.isSupported()){hlsInstance=new Hls();hlsInstance.loadSource(url);hlsInstance.attachMedia(videoEl);hlsInstance.on(Hls.Events.MANIFEST_PARSED,()=>videoEl.play());}
-        else if(videoEl.canPlayType('application/vnd.apple.mpegurl')){videoEl.src=url;videoEl.play();}
-        else alert('Your browser cannot play HLS without hls.js');
-    } else { videoEl.src=url; videoEl.play(); }
+let currentCourseDetails = null;
+let currentVideoIndex = 0;
+let hlsInstance = null;
+
+function ensureHlsDetached() {
+    if (hlsInstance) {
+        hlsInstance.destroy();
+        hlsInstance = null;
+    }
 }
 
-function setupPlayerControls(){
-    const prev=document.getElementById('prevBtn'),next=document.getElementById('nextBtn'),speed=document.getElementById('speedSelect');
-    prev.onclick=()=>{const vids=currentCourseDetails?.videos||[];if(!vids.length)return;currentVideoIndex=(currentVideoIndex-1+vids.length)%vids.length;const v=vids[currentVideoIndex];playInPlayer(v.url,v.title,currentVideoIndex);};
-    next.onclick=()=>{const vids=currentCourseDetails?.videos||[];if(!vids.length)return;currentVideoIndex=(currentVideoIndex+1)%vids.length;const v=vids[currentVideoIndex];playInPlayer(v.url,v.title,currentVideoIndex);};
-    speed.onchange=()=>{document.getElementById('mainPlayer').playbackRate=parseFloat(speed.value.replace('x',''))||1;};
+function playInPlayer(url, title, index = 0) {
+    const wrap = document.getElementById('videoPlayer'),
+          titleEl = document.getElementById('playerTitle'),
+          videoEl = document.getElementById('mainPlayer'),
+          idx = document.getElementById('indexBadge');
+
+    wrap.style.display = 'block';
+
+    // reset + update title
+    titleEl.classList.remove('playing');
+    titleEl.textContent = title || 'Playing';
+    titleEl.classList.add('playing');
+
+    currentVideoIndex = index;
+    const total = (currentCourseDetails?.videos || []).length;
+    idx.textContent = `${index + 1} / ${total}`;
+
+    document.querySelectorAll('#videosItems .content-item').forEach(el => {
+        el.classList.remove('playing');
+        const s = el.querySelector('.content-status');
+        if (s) s.textContent = '';
+    });
+
+    const cur = document.querySelectorAll('#videosItems .content-item')[index];
+    if (cur) {
+        cur.classList.add('playing');
+        const s = cur.querySelector('.content-status');
+        if (s) s.textContent = 'Playing';
+    }
+
+    ensureHlsDetached();
+    videoEl.pause();
+    videoEl.removeAttribute('src');
+
+    const lower = url.toLowerCase();
+    if (lower.endsWith('.m3u8') || lower.includes('m3u8')) {
+        if (window.Hls && Hls.isSupported()) {
+            hlsInstance = new Hls();
+            hlsInstance.loadSource(url);
+            hlsInstance.attachMedia(videoEl);
+            hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play());
+        } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+            videoEl.src = url;
+            videoEl.play();
+        } else {
+            alert('Your browser cannot play HLS without hls.js');
+        }
+    } else {
+        videoEl.src = url;
+        videoEl.play();
+    }
 }
+
+function setupPlayerControls() {
+    const prev = document.getElementById('prevBtn'),
+          next = document.getElementById('nextBtn'),
+          speed = document.getElementById('speedSelect'),
+          videoEl = document.getElementById('mainPlayer'),
+          header = document.querySelector('.header');
+
+    prev.onclick = () => {
+        const vids = currentCourseDetails?.videos || [];
+        if (!vids.length) return;
+        currentVideoIndex = (currentVideoIndex - 1 + vids.length) % vids.length;
+        const v = vids[currentVideoIndex];
+        playInPlayer(v.url, v.title, currentVideoIndex);
+    };
+
+    next.onclick = () => {
+        const vids = currentCourseDetails?.videos || [];
+        if (!vids.length) return;
+        currentVideoIndex = (currentVideoIndex + 1) % vids.length;
+        const v = vids[currentVideoIndex];
+        playInPlayer(v.url, v.title, currentVideoIndex);
+    };
+
+    speed.onchange = () => {
+        videoEl.playbackRate = parseFloat(speed.value.replace('x', '')) || 1;
+    };
+
+    // hide header when playing
+    videoEl.addEventListener('play', () => { header.style.display = 'none'; });
+    videoEl.addEventListener('pause', () => { header.style.display = 'block'; });
+    videoEl.addEventListener('ended', () => { header.style.display = 'block'; });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupPlayerControls();
+});
