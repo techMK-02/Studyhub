@@ -20,29 +20,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Explore button
-    document.addEventListener("DOMContentLoaded", () => {
-  const exploreBtn = document.getElementById("exploreCourses");
-  const coursesSection = document.getElementById("coursesSection");
-  const courseDetailSection = document.getElementById("courseDetailSection");
-
-  // Explore Courses button click
+    // Explore Courses button
+const exploreBtn = document.getElementById("exploreCourses");
+if (exploreBtn) {
   exploreBtn.addEventListener("click", () => {
-    coursesSection.style.display = "block";   // courses section dikhado
-    courseDetailSection.style.display = "none"; // course details band rakho
-    window.scrollTo({ top: coursesSection.offsetTop, behavior: "smooth" });
+    showCoursesSection();   // ✅ abhi sahi function call karega
   });
+}
 
-  // Optional: Join Community button
-  const joinBtn = document.getElementById("joinCommunity");
-  if (joinBtn) {
-    joinBtn.addEventListener("click", () => {
-      alert("Community feature coming soon! 🚀");
-    });
-  }
-});
-
-
+// Optional: Join Community button
+const joinBtn = document.getElementById("joinCommunity");
+if (joinBtn) {
+  joinBtn.addEventListener("click", () => {
+    alert("🚀 Community feature coming soon!");
+  });
+    
     // Hero icon animation
     const heroIcon = document.querySelector('.icon-circle');
     if (heroIcon) {
