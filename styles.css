@@ -269,9 +269,9 @@ body {
 }
 
 .course-card {
-    background: white;
+    background: black;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(79,135,255,0.08);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -447,7 +447,7 @@ body {
 /* Course Detail Section */
 .course-detail-section {
     padding: 40px 0;
-    background: #f8f9fa;
+    background: #ffffff;
     min-height: 100vh;
 }
 
