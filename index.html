@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Hub - Your Gateway to Excellence</title>
   <link rel="stylesheet" href="styles.css">
-
-  <!-- HLS.js for .m3u8 support -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
@@ -68,62 +66,68 @@
       </section>
 
       <!-- Course Detail Section -->
-<section class="course-detail-section" id="courseDetailSection" style="display: none;">
-  <div class="course-detail-header">
-    <h2 class="course-detail-title" id="courseDetailTitle">Course Title</h2>
-    <div class="course-detail-tabs">
-      <button class="tab-btn active" id="videosTab">📹 Videos (<span id="videosCount">0</span>)</button>
-      <button class="tab-btn" id="pdfsTab">📄 PDFs (<span id="pdfsCount">0</span>)</button>
-    </div>
-  </div>
+      <section class="course-detail-section" id="courseDetailSection" style="display: none;">
+        
+        <!-- 🔹 Video Player (always top) -->
+        <div class="video-player" id="videoPlayer" style="display:none;">
+          <video id="mainPlayer" controls playsinline></video>
 
-  <!-- 🔹 Top Video Player -->
-  <div class="video-player" id="videoPlayer" style="display:none;">
-    <video id="mainPlayer" controls playsinline></video>
+          <!-- Player Overlay Title -->
+          <div class="player-overlay-title" id="playerTitle"></div>
 
-    <!-- Player Overlay Title -->
-    <div class="player-overlay-title" id="playerTitle"></div>
+          <!-- Custom Controls -->
+          <div class="custom-controls">
+            <div class="left-controls">
+              <select id="speedSelect">
+                <option>0.5x</option>
+                <option>0.75x</option>
+                <option selected>1x</option>
+                <option>1.25x</option>
+                <option>1.5x</option>
+                <option>2x</option>
+              </select>
+            </div>
 
-    <!-- Custom Controls -->
-    <div class="custom-controls">
-      <div class="left-controls">
-        <select id="speedSelect">
-          <option>0.5x</option>
-          <option>0.75x</option>
-          <option selected>1x</option>
-          <option>1.25x</option>
-          <option>1.5x</option>
-          <option>2x</option>
-        </select>
-      </div>
+            <div class="center-controls">
+              <button id="prevBtn">Previous</button>
+              <span id="indexBadge">1 / 1</span>
+              <button id="nextBtn">Next</button>
+            </div>
 
-      <div class="center-controls">
-        <button id="prevBtn">Previous</button>
-        <span id="indexBadge">1 / 1</span>
-        <button id="nextBtn">Next</button>
-      </div>
+            <div class="right-controls">
+              <select id="qualitySelect">
+                <option>Auto</option>
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-      <div class="right-controls">
-        <select id="qualitySelect">
-          <option>Auto</option>
-          <option>1080p</option>
-          <option>720p</option>
-          <option>480p</option>
-        </select>
-      </div>
-    </div>
-  </div>
+        <!-- Course Header -->
+        <div class="course-detail-header">
+          <h2 class="course-detail-title" id="courseDetailTitle">Course Title</h2>
+        </div>
 
-
+        <!-- Course Detail Content -->
         <div class="course-detail-content">
+          <!-- Videos Section -->
+          <h3 class="content-section-title">All Videos</h3>
+
+          <!-- Tabs moved under All Videos -->
+          <div class="course-detail-tabs small-tabs">
+            <button class="tab-btn active" id="videosTab">📹 Videos (<span id="videosCount">0</span>)</button>
+            <button class="tab-btn" id="pdfsTab">📄 PDFs (<span id="pdfsCount">0</span>)</button>
+          </div>
+
           <!-- Videos List -->
           <div class="content-list active" id="videosList">
-            <h3 class="content-section-title">All Videos</h3>
             <div class="content-items" id="videosItems"></div>
           </div>
+
           <!-- PDFs List -->
           <div class="content-list" id="pdfsList">
-            <h3 class="content-section-title">All PDFs</h3>
             <div class="content-items" id="pdfsItems"></div>
           </div>
         </div>
