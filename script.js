@@ -1,11 +1,18 @@
 // Study Hub JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // Load courses data when page loads
+
+// Global state
+let coursesData = [];
+let currentCourseDetails = null;
+let hlsInstance = null;
+let currentVideoIndex = 0;
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Load courses data on page load
     loadCoursesData();
 
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', function () {
         const coursesSection = document.getElementById('coursesSection');
         const courseDetailSection = document.getElementById('courseDetailSection');
 
@@ -16,7 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             this.classList.toggle('active');
             const spans = this.querySelectorAll('span');
-            spans.forEach(span => span.style.transform = this.classList.contains('active') ? 'rotate(45deg)' : 'rotate(0deg)');
+            spans.forEach(span => {
+                span.style.transform = this.classList.contains('active')
+                    ? 'rotate(45deg)'
+                    : 'rotate(0deg)';
+            });
         }
     });
 
@@ -26,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const courseDetailSection = document.getElementById("courseDetailSection");
 
     exploreBtn.addEventListener("click", () => {
-        showCoursesSection();   // direct helper function call
+        showCoursesSection();  // helper function call
+        courseDetailSection.style.display = "none";
     });
 
     // Optional: Join Community button
@@ -40,26 +52,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hero icon animation
     const heroIcon = document.querySelector('.icon-circle');
     if (heroIcon) {
-        heroIcon.addEventListener('mouseenter', function() { this.style.transform = 'scale(1.05) rotate(5deg)'; });
-        heroIcon.addEventListener('mouseleave', function() { this.style.transform = 'scale(1) rotate(0deg)'; });
+        heroIcon.addEventListener('mouseenter', function () {
+            this.style.transform = 'scale(1.05) rotate(5deg)';
+        });
+        heroIcon.addEventListener('mouseleave', function () {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
     }
+
+    // Setup player controls
+    setupPlayerControls();
 });
 
-
 // Fade-in animation
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.5s ease-in-out';
     setTimeout(() => { document.body.style.opacity = '1'; }, 100);
 });
 
-// Global state
-let coursesData = [];
-let currentCourseDetails = null;
-let hlsInstance = null;
-let currentVideoIndex = 0;
-
-// Parse counts
+// -------- Course Data Functions --------
 function parseContentCounts(content) {
     const lines = content.split('\n').map(line => line.trim()).filter(line => line && !line.startsWith('#'));
     let videoCount = 0, pdfCount = 0;
@@ -103,7 +115,7 @@ async function loadCoursesData() {
     }
 }
 
-// Show/Hide courses
+// -------- Show/Hide Sections --------
 async function showCoursesSection() {
     document.querySelector('.hero').style.display = 'none';
     document.querySelector('.trust').style.display = 'none';
@@ -111,11 +123,12 @@ async function showCoursesSection() {
     document.getElementById('menuToggle').innerHTML = '<span style="font-size: 24px;">🏠</span>';
     await loadCoursesData();
     populateCourses();
-    document.getElementById('searchCourses').addEventListener('input', function() {
+    document.getElementById('searchCourses').addEventListener('input', function () {
         filterCourses(this.value);
     });
     window.scrollTo(0, 0);
 }
+
 function hideCoursesSection() {
     document.querySelector('.hero').style.display = 'block';
     document.querySelector('.trust').style.display = 'block';
@@ -124,6 +137,7 @@ function hideCoursesSection() {
     window.scrollTo(0, 0);
 }
 
+// -------- Populate Courses --------
 function populateCourses(courses = coursesData) {
     const list = document.getElementById('coursesList');
     list.innerHTML = '';
@@ -134,7 +148,9 @@ function createCourseCard(course) {
     const card = document.createElement('div');
     card.className = 'course-card';
     const isImageUrl = course.thumbnail.startsWith('http');
-    const thumbnailContent = isImageUrl ? `<img src="${course.thumbnail}" alt="${course.title}" style="width:100%;height:100%;object-fit:cover;">` : course.thumbnail;
+    const thumbnailContent = isImageUrl
+        ? `<img src="${course.thumbnail}" alt="${course.title}" style="width:100%;height:100%;object-fit:cover;">`
+        : course.thumbnail;
     card.innerHTML = `
       <div class="course-thumbnail">${thumbnailContent}</div>
       <div class="course-content">
@@ -154,10 +170,13 @@ function createCourseCard(course) {
 }
 
 function filterCourses(term) {
-    populateCourses(coursesData.filter(c => c.title.toLowerCase().includes(term.toLowerCase()) || c.description.toLowerCase().includes(term.toLowerCase())));
+    populateCourses(coursesData.filter(c =>
+        c.title.toLowerCase().includes(term.toLowerCase()) ||
+        c.description.toLowerCase().includes(term.toLowerCase())
+    ));
 }
 
-// Parse course content
+// -------- Parse Course Content --------
 async function parseDetailedCourseContent(txtFile) {
     try {
         const response = await fetch(`/course_txts/${txtFile}`);
@@ -165,30 +184,54 @@ async function parseDetailedCourseContent(txtFile) {
         const lines = (await response.text()).split('\n').filter(l => l.trim() !== '');
         const videos = [], pdfs = []; let section = 'videos';
         for (let line of lines) {
-            line = line.trim(); if (!line || line.startsWith('#')) { if (line.toLowerCase().includes('pdf')) section='pdfs'; if (line.toLowerCase().includes('video')) section='videos'; continue; }
+            line = line.trim();
+            if (!line || line.startsWith('#')) {
+                if (line.toLowerCase().includes('pdf')) section = 'pdfs';
+                if (line.toLowerCase().includes('video')) section = 'videos';
+                continue;
+            }
             if (line.includes(': ')) {
                 const [title, url] = line.split(': ');
                 const item = { title: title.trim(), url: url.trim() };
-                if (isVideoUrl(url)) videos.push(item); else if (isPdfUrl(url)) pdfs.push(item); else (section==='videos'?videos:pdfs).push(item);
+                if (isVideoUrl(url)) videos.push(item);
+                else if (isPdfUrl(url)) pdfs.push(item);
+                else (section === 'videos' ? videos : pdfs).push(item);
             } else if (isUrl(line)) {
-                const url=line; const item={title:extractTitleFromUrl(url),url};
-                if (isVideoUrl(url)) videos.push(item); else if (isPdfUrl(url)) pdfs.push(item); else (section==='videos'?videos:pdfs).push(item);
+                const url = line;
+                const item = { title: extractTitleFromUrl(url), url };
+                if (isVideoUrl(url)) videos.push(item);
+                else if (isPdfUrl(url)) pdfs.push(item);
+                else (section === 'videos' ? videos : pdfs).push(item);
             }
         }
         return { videos, pdfs };
-    } catch { return { videos: [], pdfs: [] }; }
+    } catch {
+        return { videos: [], pdfs: [] };
+    }
 }
 
-// Helpers
+// -------- Helpers --------
 function isUrl(s) { try { new URL(s); return true; } catch { return false; } }
-function isVideoUrl(u) { const ex=['.mp4','.m3u8','.avi','.mov','.wmv']; u=u.toLowerCase(); return ex.some(e=>u.includes(e))||u.includes('youtube.com')||u.includes('youtu.be'); }
-function isPdfUrl(u) { return u.toLowerCase().includes('.pdf')||u.toLowerCase().includes('/pdf/'); }
-function extractTitleFromUrl(u){try{const p=u.split('/');return p[p.length-1].split('.')[0].replace(/[-_]/g,' ');}catch{return 'Untitled';}}
+function isVideoUrl(u) {
+    const ex = ['.mp4', '.m3u8', '.avi', '.mov', '.wmv'];
+    u = u.toLowerCase();
+    return ex.some(e => u.includes(e)) || u.includes('youtube.com') || u.includes('youtu.be');
+}
+function isPdfUrl(u) { return u.toLowerCase().includes('.pdf') || u.toLowerCase().includes('/pdf/'); }
+function extractTitleFromUrl(u) {
+    try {
+        const p = u.split('/');
+        return p[p.length - 1].split('.')[0].replace(/[-_]/g, ' ');
+    } catch { return 'Untitled'; }
+}
 
-// Explore course
+// -------- Explore Course --------
 async function exploreCourse(id) {
-    const course = coursesData.find(c => c.id===id);
-    if (!course || !course.txtFile) { alert('Course content not available'); return; }
+    const course = coursesData.find(c => c.id === id);
+    if (!course || !course.txtFile) {
+        alert('Course content not available');
+        return;
+    }
     const details = await parseDetailedCourseContent(course.txtFile);
     currentCourseDetails = { course, ...details };
     showCourseDetailSection();
@@ -196,71 +239,82 @@ async function exploreCourse(id) {
 
 function showCourseDetailSection() {
     if (!currentCourseDetails) return;
-    document.querySelector('.hero').style.display='none';
-    document.querySelector('.trust').style.display='none';
-    document.getElementById('coursesSection').style.display='none';
-    document.getElementById('courseDetailSection').style.display='block';
-    document.getElementById('menuToggle').innerHTML='<span style="font-size:24px;">🏠</span>';
+    document.querySelector('.hero').style.display = 'none';
+    document.querySelector('.trust').style.display = 'none';
+    document.getElementById('coursesSection').style.display = 'none';
+    document.getElementById('courseDetailSection').style.display = 'block';
+    document.getElementById('menuToggle').innerHTML = '<span style="font-size:24px;">🏠</span>';
     populateCourseDetail();
     setupCourseTabs();
-    window.scrollTo(0,0);
-}
-function hideCourseDetailSection() {
-    document.querySelector('.hero').style.display='none';
-    document.querySelector('.trust').style.display='none';
-    document.getElementById('coursesSection').style.display='block';
-    document.getElementById('courseDetailSection').style.display='none';
-    document.getElementById('menuToggle').innerHTML='<span style="font-size:24px;">🏠</span>';
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 }
 
+function hideCourseDetailSection() {
+    document.querySelector('.hero').style.display = 'none';
+    document.querySelector('.trust').style.display = 'none';
+    document.getElementById('coursesSection').style.display = 'block';
+    document.getElementById('courseDetailSection').style.display = 'none';
+    document.getElementById('menuToggle').innerHTML = '<span style="font-size:24px;">🏠</span>';
+    window.scrollTo(0, 0);
+}
+
+// -------- Populate Course Details --------
 function populateCourseDetail() {
     const { course, videos, pdfs } = currentCourseDetails;
     document.getElementById('courseDetailTitle').textContent = course.title;
     document.getElementById('videosCount').textContent = videos.length;
     document.getElementById('pdfsCount').textContent = pdfs.length;
 
-    const vItems = document.getElementById('videosItems'); vItems.innerHTML='';
-    videos.forEach((v,i)=>vItems.appendChild(createContentItem(v,i+1,'video')));
-    document.querySelector('#videosList .content-section-title').textContent=`All Videos - ${course.title}`;
+    const vItems = document.getElementById('videosItems'); vItems.innerHTML = '';
+    videos.forEach((v, i) => vItems.appendChild(createContentItem(v, i + 1, 'video')));
+    document.querySelector('#videosList .content-section-title').textContent = `All Videos - ${course.title}`;
 
-    const pItems = document.getElementById('pdfsItems'); pItems.innerHTML='';
-    pdfs.forEach((p,i)=>pItems.appendChild(createContentItem(p,i+1,'pdf')));
-    document.querySelector('#pdfsList .content-section-title').textContent=`All PDFs - ${course.title}`;
+    const pItems = document.getElementById('pdfsItems'); pItems.innerHTML = '';
+    pdfs.forEach((p, i) => pItems.appendChild(createContentItem(p, i + 1, 'pdf')));
+    document.querySelector('#pdfsList .content-section-title').textContent = `All PDFs - ${course.title}`;
 
     setupPlayerControls();
     if (videos.length) playInPlayer(videos[0].url, videos[0].title, 0);
-    else document.getElementById('videoPlayer').style.display='none';
+    else document.getElementById('videoPlayer').style.display = 'none';
 }
 
 function createContentItem(content, number, type) {
-    const item=document.createElement('div'); item.className=`content-item ${type}`;
-    if (type==='video') item.onclick=()=>playInPlayer(content.url, content.title, number-1);
-    else item.onclick=()=>openContent(content.url);
-    item.innerHTML=`
+    const item = document.createElement('div');
+    item.className = `content-item ${type}`;
+    if (type === 'video') item.onclick = () => playInPlayer(content.url, content.title, number - 1);
+    else item.onclick = () => openContent(content.url);
+    item.innerHTML = `
       <div class="content-number">${number}</div>
       <div class="content-title">${content.title}</div>
-      ${type==='video'&&number===1?'<div class="content-status">Playing</div>':''}`;
-    if (type==='video'&&number===1) item.classList.add('playing');
+      ${type === 'video' && number === 1 ? '<div class="content-status">Playing</div>' : ''}`;
+    if (type === 'video' && number === 1) item.classList.add('playing');
     return item;
 }
 
-// Tabs
+// -------- Tabs --------
 function setupCourseTabs() {
-    const vTab=document.getElementById('videosTab'), pTab=document.getElementById('pdfsTab');
-    const vList=document.getElementById('videosList'), pList=document.getElementById('pdfsList');
-    vTab.onclick=()=>{vTab.classList.add('active');pTab.classList.remove('active');vList.classList.add('active');pList.classList.remove('active');};
-    pTab.onclick=()=>{pTab.classList.add('active');vTab.classList.remove('active');pList.classList.add('active');vList.classList.remove('active');};
+    const vTab = document.getElementById('videosTab'),
+        pTab = document.getElementById('pdfsTab');
+    const vList = document.getElementById('videosList'),
+        pList = document.getElementById('pdfsList');
+    vTab.onclick = () => {
+        vTab.classList.add('active');
+        pTab.classList.remove('active');
+        vList.classList.add('active');
+        pList.classList.remove('active');
+    };
+    pTab.onclick = () => {
+        pTab.classList.add('active');
+        vTab.classList.remove('active');
+        pList.classList.add('active');
+        vList.classList.remove('active');
+    };
 }
 
-// Open PDFs
-function openContent(url){window.open(url,'_blank');}
+// -------- Open PDFs --------
+function openContent(url) { window.open(url, '_blank'); }
 
-// 🔹 Player Functions
-let currentCourseDetails = null;
-let currentVideoIndex = 0;
-let hlsInstance = null;
-
+// -------- Player Functions --------
 function ensureHlsDetached() {
     if (hlsInstance) {
         hlsInstance.destroy();
@@ -270,9 +324,9 @@ function ensureHlsDetached() {
 
 function playInPlayer(url, title, index = 0) {
     const wrap = document.getElementById('videoPlayer'),
-          titleEl = document.getElementById('playerTitle'),
-          videoEl = document.getElementById('mainPlayer'),
-          idx = document.getElementById('indexBadge');
+        titleEl = document.getElementById('playerTitle'),
+        videoEl = document.getElementById('mainPlayer'),
+        idx = document.getElementById('indexBadge');
 
     wrap.style.display = 'block';
 
@@ -323,10 +377,12 @@ function playInPlayer(url, title, index = 0) {
 
 function setupPlayerControls() {
     const prev = document.getElementById('prevBtn'),
-          next = document.getElementById('nextBtn'),
-          speed = document.getElementById('speedSelect'),
-          videoEl = document.getElementById('mainPlayer'),
-          header = document.querySelector('.header');
+        next = document.getElementById('nextBtn'),
+        speed = document.getElementById('speedSelect'),
+        videoEl = document.getElementById('mainPlayer'),
+        header = document.querySelector('.header');
+
+    if (!prev || !next || !speed) return;
 
     prev.onclick = () => {
         const vids = currentCourseDetails?.videos || [];
@@ -353,7 +409,3 @@ function setupPlayerControls() {
     videoEl.addEventListener('pause', () => { header.style.display = 'block'; });
     videoEl.addEventListener('ended', () => { header.style.display = 'block'; });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    setupPlayerControls();
-});
