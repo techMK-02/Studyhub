@@ -68,34 +68,52 @@
       </section>
 
       <!-- Course Detail Section -->
-      <section class="course-detail-section" id="courseDetailSection" style="display: none;">
-        <div class="course-detail-header">
-          <h2 class="course-detail-title" id="courseDetailTitle">Course Title</h2>
-          <div class="course-detail-tabs">
-            <button class="tab-btn active" id="videosTab">📹 Videos (<span id="videosCount">0</span>)</button>
-            <button class="tab-btn" id="pdfsTab">📄 PDFs (<span id="pdfsCount">0</span>)</button>
-          </div>
-        </div>
+<section class="course-detail-section" id="courseDetailSection" style="display: none;">
+  <div class="course-detail-header">
+    <h2 class="course-detail-title" id="courseDetailTitle">Course Title</h2>
+    <div class="course-detail-tabs">
+      <button class="tab-btn active" id="videosTab">📹 Videos (<span id="videosCount">0</span>)</button>
+      <button class="tab-btn" id="pdfsTab">📄 PDFs (<span id="pdfsCount">0</span>)</button>
+    </div>
+  </div>
 
-        <!-- 🔹 Top Video Player -->
-        <div class="video-player" id="videoPlayer" style="display:none;">
-          <div class="player-title" id="playerTitle"></div>
-          <video id="mainPlayer" controls playsinline></video>
-          <div class="player-controls">
-            <button id="prevBtn">Previous</button>
-            <span id="indexBadge">1 / 1</span>
-            <button id="nextBtn">Next</button>
-            <div class="spacer"></div>
-            <label>
-              Speed
-              <select id="speedSelect">
-                <option>0.5x</option><option>0.75x</option>
-                <option selected>1x</option>
-                <option>1.25x</option><option>1.5x</option><option>2x</option>
-              </select>
-            </label>
-          </div>
-        </div>
+  <!-- 🔹 Top Video Player -->
+  <div class="video-player" id="videoPlayer" style="display:none;">
+    <video id="mainPlayer" controls playsinline></video>
+
+    <!-- Player Overlay Title -->
+    <div class="player-overlay-title" id="playerTitle"></div>
+
+    <!-- Custom Controls -->
+    <div class="custom-controls">
+      <div class="left-controls">
+        <select id="speedSelect">
+          <option>0.5x</option>
+          <option>0.75x</option>
+          <option selected>1x</option>
+          <option>1.25x</option>
+          <option>1.5x</option>
+          <option>2x</option>
+        </select>
+      </div>
+
+      <div class="center-controls">
+        <button id="prevBtn">Previous</button>
+        <span id="indexBadge">1 / 1</span>
+        <button id="nextBtn">Next</button>
+      </div>
+
+      <div class="right-controls">
+        <select id="qualitySelect">
+          <option>Auto</option>
+          <option>1080p</option>
+          <option>720p</option>
+          <option>480p</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
 
         <div class="course-detail-content">
           <!-- Videos List -->
