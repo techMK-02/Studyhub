@@ -20,21 +20,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Explore Courses button
-const exploreBtn = document.getElementById("exploreCourses");
-if (exploreBtn) {
-  exploreBtn.addEventListener("click", () => {
-    showCoursesSection();   // ✅ abhi sahi function call karega
-  });
-}
+    // ✅ Explore Courses button
+    const exploreBtn = document.getElementById("exploreCourses");
+    const coursesSection = document.getElementById("coursesSection");
+    const courseDetailSection = document.getElementById("courseDetailSection");
 
-// Optional: Join Community button
-const joinBtn = document.getElementById("joinCommunity");
-if (joinBtn) {
-  joinBtn.addEventListener("click", () => {
-    alert("🚀 Community feature coming soon!");
-  });
-    
+    exploreBtn.addEventListener("click", () => {
+        showCoursesSection();   // direct helper function call
+    });
+
+    // Optional: Join Community button
+    const joinBtn = document.getElementById("joinCommunity");
+    if (joinBtn) {
+        joinBtn.addEventListener("click", () => {
+            alert("Community feature coming soon! 🚀");
+        });
+    }
+
     // Hero icon animation
     const heroIcon = document.querySelector('.icon-circle');
     if (heroIcon) {
@@ -42,6 +44,7 @@ if (joinBtn) {
         heroIcon.addEventListener('mouseleave', function() { this.style.transform = 'scale(1) rotate(0deg)'; });
     }
 });
+
 
 // Fade-in animation
 window.addEventListener('load', function() {
