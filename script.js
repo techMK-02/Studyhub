@@ -21,20 +21,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Explore button
-    const exploreCourses = document.getElementById('exploreCourses');
-    const joinCommunity = document.getElementById('joinCommunity');
+    document.addEventListener("DOMContentLoaded", () => {
+  const exploreBtn = document.getElementById("exploreCourses");
+  const coursesSection = document.getElementById("coursesSection");
+  const courseDetailSection = document.getElementById("courseDetailSection");
 
-    exploreCourses.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => { this.style.transform = 'scale(1)'; }, 150);
-        showCoursesSection();
-    });
+  // Explore Courses button click
+  exploreBtn.addEventListener("click", () => {
+    coursesSection.style.display = "block";   // courses section dikhado
+    courseDetailSection.style.display = "none"; // course details band rakho
+    window.scrollTo({ top: coursesSection.offsetTop, behavior: "smooth" });
+  });
 
-    joinCommunity.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => { this.style.transform = 'scale(1)'; }, 150);
-        alert('Community section coming soon!');
+  // Optional: Join Community button
+  const joinBtn = document.getElementById("joinCommunity");
+  if (joinBtn) {
+    joinBtn.addEventListener("click", () => {
+      alert("Community feature coming soon! 🚀");
     });
+  }
+});
+
 
     // Hero icon animation
     const heroIcon = document.querySelector('.icon-circle');
