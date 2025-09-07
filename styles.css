@@ -535,13 +535,9 @@ body {
 }
 
 /* 🔹 Playing status highlight */
-.player-overlay-title.playing::after {
-  content: " ▶ Playing";
-  color: yellow;
-  font-weight: bold;
-  margin-left: 6px;
+player-overlay-title {
+  transition: opacity 0.5s ease-in-out; /* smooth hide effect */
 }
-
 /* 🔹 Tabs below the player */
 .course-detail-tabs {
     display: flex;
